@@ -4,4 +4,9 @@
     Welcome to {{ title }}!
   </h1>
  
- 
+ <ul class="list-group">
+  <li class="list-group-item" *ngFor="let book of softBooks">
+    <span>ID: {{book.id}}, name: {{book.name}}, category: {{book.category}}</span>
+  </li>
+
+ </ul>
