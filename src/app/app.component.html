@@ -1,12 +1,75 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
- 
- <ul class="list-group">
-  <li class="list-group-item" *ngFor="let book of softBooks">
-    <span>ID: {{book.id}}, name: {{book.name}}, category: {{book.category}}</span>
-  </li>
 
- </ul>
+<h3>Angular HttpClient Post</h3>
+
+<p *ngIf="datasaved" [ngClass]="Success">
+  Record saved successfully !
+</p>
+
+<form class="container" [formGroup]="bookForm" (ngSubmit)="onFormSubmit()">
+
+  <table>
+
+
+    <tr>
+      <td>
+        Name:
+      </td>
+      <td>
+        <input formControlName="name">
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        Category:
+      </td>
+      <td>
+        <input formControlName="category">
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        Writer:
+      </td>
+      <td>
+        <input formControlName="writer">
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan='2'>
+        <button [disabled]="bookForm.invalid">Submit</button>
+      </td>
+    </tr>
+
+  </table>
+</form>
+
+<h3>View</h3>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Writer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let bk of allbooks | async">
+      <td scope="row"></td>
+      <td>{{bk.id}}</td>
+      <td>{{bk.name}}</td>
+      <td>{{bk.category}}</td>
+      <td>{{bk.writer}}</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
