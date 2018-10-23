@@ -15,9 +15,19 @@ export class AppComponent implements OnInit {
  datasaved = false;
  bookForm: FormGroup;
  allbooks: Observable<Book[]>;
+ bookIdToUpdate = null;
 
 
 constructor(private formbuilder: FormBuilder , private _bookService: BookService) {}
+
+bookToEdit(bookid: string) {
+  this._bookService.getbookbyid(bookid).subscribe(book => {
+    this.bookIdToUpdate = bookid;
+    this.bookForm.controls['name'].setValue(book.name);
+    this.bookForm.controls['category'].setValue(book.category);
+    this.bookForm.controls['writer'].setValue(book.writer);
+  });
+}
 
   ngOnInit() {
 
@@ -39,18 +49,28 @@ constructor(private formbuilder: FormBuilder , private _bookService: BookService
   }
 
   createbooks(book: Book) {
+    if(this.bookIdToUpdate == null) {
     this._bookService.createBook(book).subscribe(
       book => {
         this.datasaved = true;
         this.getSoftBooks();
+        this.bookIdToUpdate = null;
 
       }
-    )
+    );
+    } else {
+      book.id = this.bookIdToUpdate;
+      this._bookService.updateBook(book)
+      .subscribe( book => {
+        this.datasaved = true;
+        this.getSoftBooks();
+        this.bookIdToUpdate = null;
+
+      } );
+    }
   }
 
   getSoftBooks() {
     this.allbooks = this._bookService.getBooksFromStore();
   }
-
-
 }
