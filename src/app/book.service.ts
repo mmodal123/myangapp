@@ -33,6 +33,16 @@ export class BookService {
     return this._http.put<number>(this.bookUrl + '/' + book.id, book, options);
   }
 
+  deleteBook(bookid: string): Observable<number> {
+    let httpheaders = new HttpHeaders()
+    .set('content-Type', 'application/json');
+    let options = {
+      headers: httpheaders
+    };
+
+    return this._http.delete<number>(this.bookUrl + '/' + bookid);
+  }
+
 
   getBooksFromStore(): Observable<Book[]> {
     return this._http.get<Book[]>(this.bookUrl);

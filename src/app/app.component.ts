@@ -29,6 +29,12 @@ bookToEdit(bookid: string) {
   });
 }
 
+bookDelete(bookid: string) {
+  this._bookService.deleteBook(bookid)
+  .subscribe(book => this.getSoftBooks());
+
+}
+
   ngOnInit() {
 
     this.bookForm = this.formbuilder.group({
